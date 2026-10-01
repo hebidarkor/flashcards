@@ -1,0 +1,8 @@
+﻿node_modules/
+build/
+dist/
+.env
+.env.local
+scripts/words-raw.json
+scripts/words-enriched.json
+
