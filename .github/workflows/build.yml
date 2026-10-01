@@ -3,7 +3,7 @@ name: Build Installers
 on:
   push:
     branches: [main, master]
-  workflow_dispatch:   # lets you trigger a build manually from GitHub's UI
+  workflow_dispatch:
 
 jobs:
   # ── Windows installer ────────────────────────────────────────────────────────
@@ -17,18 +17,16 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache: npm
+          node-version: 22
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
       - name: Build + package
         run: npm run package:win
 
       - name: Build installer package
         run: node scripts/build-installer.js
-        # skip the package:win step inside build-installer since we just ran it
         env:
           SKIP_PACKAGE: "1"
 
@@ -50,20 +48,46 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache: npm
+          node-version: 22
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
-      - name: Build + package + create DMG
+      - name: Build React app
+        run: npm run build
+
+      - name: Package with electron-packager
         run: |
-          chmod +x scripts/build-mac.sh
-          ./scripts/build-mac.sh
+          npx electron-packager . "Greek Flashcards" \
+            --platform=darwin \
+            --arch=arm64 \
+            --out=dist \
+            --overwrite \
+            --ignore=src \
+            --ignore="node_modules/.cache" \
+            --ignore=.git \
+            --ignore=scripts \
+            --app-bundle-id=com.greek.flashcards \
+            --app-version=1.0.0
+
+      - name: Create DMG
+        run: |
+          APP="dist/Greek Flashcards-darwin-arm64/Greek Flashcards.app"
+          mkdir -p dist/mac-installer
+          STAGING=$(mktemp -d)
+          cp -R "$APP" "$STAGING/"
+          ln -s /Applications "$STAGING/Applications"
+          hdiutil create \
+            -volname "Greek Flashcards" \
+            -srcfolder "$STAGING" \
+            -ov \
+            -format UDZO \
+            "dist/mac-installer/Greek Flashcards.dmg"
+          rm -rf "$STAGING"
 
       - name: Upload Mac DMG
         uses: actions/upload-artifact@v4
         with:
           name: Greek-Flashcards-Mac
-          path: dist/mac-installer/Greek Flashcards.dmg
+          path: "dist/mac-installer/Greek Flashcards.dmg"
           retention-days: 30
