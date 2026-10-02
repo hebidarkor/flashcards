@@ -2,6 +2,7 @@
   "name": "greek-flashcards",
   "version": "1.0.0",
   "description": "Greek vocabulary flashcard app",
+  "homepage": ".",
   "main": "electron/main.js",
   "scripts": {
     "start": "concurrently \"cross-env BROWSER=none react-scripts start\" \"wait-on http://localhost:3000 && electron .\"",

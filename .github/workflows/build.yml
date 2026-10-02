@@ -119,10 +119,15 @@ jobs:
           sudo apt-get install -y librsvg2-bin
           node scripts/generate-icons.js
 
-      - name: Build React app
-        run: npm run build
-        env:
-          PUBLIC_URL: /flashcards
+      - name: Build React app for GitHub Pages
+        run: |
+          node -e "
+            const fs = require('fs');
+            const pkg = JSON.parse(fs.readFileSync('package.json','utf8'));
+            pkg.homepage = 'https://hebidarkor.github.io/flashcards';
+            fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2));
+          "
+          npm run build
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
