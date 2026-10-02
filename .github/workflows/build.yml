@@ -119,15 +119,24 @@ jobs:
           sudo apt-get install -y librsvg2-bin
           node scripts/generate-icons.js
 
-      - name: Build React app for GitHub Pages
+      - name: Fix CSV encoding + set homepage
         run: |
           node -e "
             const fs = require('fs');
+            // Re-encode CSV: strip any CRLF introduced by Windows git, ensure clean UTF-8 LF
+            const raw = fs.readFileSync('public/greek_anki.csv');
+            const fixed = raw.toString('utf8').replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+            fs.writeFileSync('public/greek_anki.csv', fixed, 'utf8');
+            console.log('CSV fixed. First line:', fixed.split('\n')[0]);
+            console.log('Line 2:', fixed.split('\n')[1]);
+            // Set homepage for GitHub Pages build
             const pkg = JSON.parse(fs.readFileSync('package.json','utf8'));
             pkg.homepage = 'https://hebidarkor.github.io/flashcards';
             fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2));
           "
-          npm run build
+
+      - name: Build React app for GitHub Pages
+        run: npm run build
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
@@ -135,3 +144,5 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build
           force_orphan: true
+          # Ensure .nojekyll so GitHub serves all files as-is
+          enable_jekyll: false
