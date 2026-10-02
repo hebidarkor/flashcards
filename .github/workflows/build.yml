@@ -24,6 +24,8 @@ jobs:
 
       - name: Build + package
         run: npm run package:win
+        env:
+          PUBLIC_URL: "."
 
       - name: Build installer package
         run: node scripts/build-installer.js
@@ -55,6 +57,8 @@ jobs:
 
       - name: Build React app
         run: npm run build
+        env:
+          PUBLIC_URL: "."
 
       - name: Package with electron-packager
         run: |
