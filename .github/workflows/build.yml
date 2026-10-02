@@ -1,4 +1,4 @@
-name: Build Installers
+name: Build Installers + Deploy PWA
 
 on:
   push:
@@ -91,3 +91,38 @@ jobs:
           name: Greek-Flashcards-Mac
           path: "dist/mac-installer/Greek Flashcards.dmg"
           retention-days: 30
+
+  # ── GitHub Pages PWA deployment ──────────────────────────────────────────────
+  deploy-pwa:
+    name: Deploy PWA to GitHub Pages
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Generate PWA icons
+        run: |
+          sudo apt-get install -y librsvg2-bin
+          node scripts/generate-icons.js
+
+      - name: Build React app
+        run: npm run build
+        env:
+          PUBLIC_URL: /flashcards
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build
+          force_orphan: true

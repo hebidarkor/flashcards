@@ -852,3 +852,115 @@ kbd {
 
 .today-col .dist-label { color: var(--accent); font-weight: 700; }
 .today-bar { background: var(--accent) !important; }
+
+/* ── Mobile / PWA layout ─────────────────────────────────────────────────────
+   Safe area insets for iPhone notch / Dynamic Island / home indicator bar   */
+
+body {
+  /* Prevent text size inflation on orientation change */
+  -webkit-text-size-adjust: 100%;
+}
+
+.app {
+  /* Respect iOS safe areas */
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* ── Mobile header ───────────────────────────────────────────────────────────*/
+@media (max-width: 600px) {
+  .header {
+    padding: 8px 12px;
+    gap: 8px;
+  }
+
+  .app-title { display: none; }   /* save space on small screens */
+
+  .mode-toggle button {
+    padding: 5px 9px;
+    font-size: 0.72rem;
+  }
+
+  .header-right { gap: 6px; }
+
+  .stats { gap: 6px; font-size: 0.78rem; }
+
+  .icon-btn { padding: 4px 7px; font-size: 0.9rem; }
+}
+
+/* ── Mobile card ─────────────────────────────────────────────────────────────*/
+@media (max-width: 600px) {
+  .card-area { gap: 20px; padding: 16px 12px; }
+
+  .card-container { height: 240px; }
+
+  .card-word      { font-size: 1.8rem; }
+  .card-word.greek { font-size: 2rem; }
+
+  .card-face { padding: 20px 16px; gap: 8px; }
+}
+
+/* ── Mobile grade buttons ────────────────────────────────────────────────────*/
+@media (max-width: 600px) {
+  .grade-actions { gap: 6px; }
+
+  .grade-btn {
+    padding: 10px 10px;
+    min-width: 60px;
+    flex: 1;
+  }
+
+  .grade-label { font-size: 0.82rem; }
+  .grade-sub   { font-size: 0.62rem; }
+  .grade-btn kbd { display: none; }  /* hide keyboard hints on touch */
+}
+
+/* ── Mobile type answer ──────────────────────────────────────────────────────*/
+@media (max-width: 600px) {
+  .type-answer    { width: 100%; }
+  .ta-card        { padding: 24px 16px 20px; }
+  .ta-form        { flex-direction: column; }
+  .ta-input       { font-size: 1rem; }
+  .ta-submit      { width: 100%; padding: 12px; }
+  .ta-actions     { flex-direction: column; width: 100%; }
+  .ta-actions .btn { width: 100%; justify-content: center; }
+}
+
+/* ── Mobile multiple choice ──────────────────────────────────────────────────*/
+@media (max-width: 600px) {
+  .mc-container { width: 100%; }
+  .mc-choices   { grid-template-columns: 1fr; }
+  .mc-choice    { padding: 14px 14px; }
+  .mc-next      { width: 100%; justify-content: center; }
+}
+
+/* ── Mobile cloze ────────────────────────────────────────────────────────────*/
+@media (max-width: 600px) {
+  .cloze-container { width: 100%; }
+  .cloze-card      { padding: 24px 16px 20px; }
+  .cloze-sentence  { font-size: 1.15rem; }
+  .cloze-result .ta-actions { flex-direction: column; width: 100%; }
+  .cloze-result .btn        { width: 100%; justify-content: center; }
+}
+
+/* ── Mobile stats / settings overlays ───────────────────────────────────────*/
+@media (max-width: 600px) {
+  .overlay { padding: 12px; align-items: flex-end; }
+
+  .stats-screen,
+  .settings-panel {
+    width: 100%;
+    border-radius: 20px 20px 0 0;
+    max-height: 90vh;
+    padding: 24px 20px;
+    padding-bottom: calc(24px + env(safe-area-inset-bottom));
+  }
+
+  .stats-tiles { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ── Tap highlight removal (cleaner on iOS) ──────────────────────────────────*/
+button, .card-container {
+  -webkit-tap-highlight-color: transparent;
+}
+
