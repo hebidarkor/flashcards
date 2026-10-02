@@ -143,6 +143,12 @@ body {
   gap: 28px;
   padding: 24px;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.card-area.scrollable {
+  justify-content: flex-start;
+  padding-top: 16px;
 }
 
 /* ── 3-D flip card ───────────────────────────────────────────────────────── */

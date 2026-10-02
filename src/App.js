@@ -324,7 +324,7 @@ export default function App() {
       )}
 
       {/* ── Main study area ─────────────────────────────────────────────── */}
-      <main className="card-area">
+      <main className={`card-area${studyMode === 'alphabet' ? ' scrollable' : ''}`}>
 
         {/* ── Flashcard mode ── */}
         {studyMode === 'flashcard' && (
