@@ -1,7 +1,7 @@
 // Service Worker for Greek Flashcards PWA
 // Caches all app assets so it works fully offline after first load.
 
-const CACHE = 'greek-flashcards-v1';
+const CACHE = 'greek-flashcards-v3';
 
 // On install: cache everything in the build
 self.addEventListener('install', (e) => {
