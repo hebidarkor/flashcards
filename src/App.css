@@ -964,3 +964,145 @@ button, .card-container {
   -webkit-tap-highlight-color: transparent;
 }
 
+
+/* ── Alphabet screen ─────────────────────────────────────────────────────────*/
+.alphabet-screen {
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 4px 0 24px;
+}
+
+.alphabet-intro {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+/* 6-column grid on desktop, 4 on mobile */
+.alpha-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+}
+
+@media (max-width: 600px) {
+  .alpha-grid { grid-template-columns: repeat(4, 1fr); gap: 8px; }
+}
+
+.alpha-card {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 6px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, transform 0.1s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.alpha-card:hover  { border-color: var(--accent); background: var(--surface2); }
+.alpha-card:active { transform: scale(0.95); }
+
+.alpha-card.alpha-active {
+  border-color: var(--accent);
+  background: rgba(59,130,212,0.08);
+}
+
+.alpha-upper { font-size: 1.6rem; font-weight: 700; color: var(--text); line-height: 1; }
+.alpha-lower { font-size: 1.2rem; color: var(--muted); line-height: 1; }
+.alpha-name  { font-size: 0.6rem; font-weight: 600; text-transform: uppercase;
+               letter-spacing: 0.05em; color: var(--muted); margin-top: 2px; }
+.alpha-latin { font-size: 0.65rem; color: var(--accent); font-weight: 600; }
+
+/* Active letter detail panel */
+.alpha-detail {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 18px 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  box-shadow: var(--shadow);
+}
+
+.alpha-detail-letter {
+  font-size: 2.4rem;
+  font-weight: 800;
+  color: var(--text);
+  min-width: 70px;
+  text-align: center;
+}
+
+.alpha-detail-name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.alpha-detail-pron {
+  font-size: 0.85rem;
+  color: var(--muted);
+  font-style: italic;
+  flex: 1;
+}
+
+.alpha-replay {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--text);
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+.alpha-replay:hover { background: var(--border); }
+
+/* Section title */
+.alpha-section-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+/* Digraphs grid */
+.digraph-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 8px;
+}
+
+.digraph-card {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.15s, background 0.15s, transform 0.1s;
+  -webkit-tap-highlight-color: transparent;
+}
+.digraph-card:hover  { border-color: var(--accent); background: var(--surface2); }
+.digraph-card:active { transform: scale(0.97); }
+
+.digraph-combo { font-size: 1.3rem; font-weight: 700; color: var(--text); }
+.digraph-sound { font-size: 0.78rem; color: var(--accent); font-weight: 600; }
+.digraph-note  { font-size: 0.72rem; color: var(--muted); line-height: 1.3; }
+

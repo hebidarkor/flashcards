@@ -6,6 +6,7 @@ import TypeAnswer from './components/TypeAnswer';
 import MultipleChoice from './components/MultipleChoice';
 import Cloze from './components/Cloze';
 import StatsScreen from './components/StatsScreen';
+import Alphabet from './components/Alphabet';
 import './App.css';
 
 // ── CSV loader ────────────────────────────────────────────────────────────────
@@ -50,6 +51,7 @@ const STUDY_MODES = [
   { id: 'type',      label: 'Type' },
   { id: 'multiple',  label: 'Multiple choice' },
   { id: 'cloze',     label: 'Cloze' },
+  { id: 'alphabet',  label: 'Alphabet' },
 ];
 
 const DIRECTION_MODES = [
@@ -224,14 +226,14 @@ export default function App() {
           ))}
         </div>
 
-        <div className="mode-toggle direction-toggle">
+        {studyMode !== 'alphabet' && <div className="mode-toggle direction-toggle">
           {DIRECTION_MODES.map((m) => (
             <button key={m.id} className={direction === m.id ? 'active' : ''}
               onClick={() => { setDirection(m.id); setFlipped(false); }}>
               {m.label}
             </button>
           ))}
-        </div>
+        </div>}
 
         <div className="header-right">
           <div className="stats">
@@ -381,6 +383,10 @@ export default function App() {
 
         {studyMode === 'cloze' && (
           <Cloze card={current} onAdvance={advance} />
+        )}
+
+        {studyMode === 'alphabet' && (
+          <Alphabet />
         )}
       </main>
 
